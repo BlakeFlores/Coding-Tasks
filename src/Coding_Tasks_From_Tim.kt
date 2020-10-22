@@ -1,3 +1,6 @@
+import java.time.LocalDate
+import java.util.*
+
 fun main() {
     println("Welcome to the FruitDealer2020")
     println("Apples: \$.60 or Buy 1 get 1 free!\n" +
@@ -9,7 +12,9 @@ fun main() {
         order_parse(userOrder)
     }
 
-
+    var arrival = Calendar.getInstance()
+    arrival.add(Calendar.DAY_OF_YEAR, 7)
+    println("Your order has been placed! It will arrive in ${arrival.time}")
 }
 
 fun order_parse(userOrder:String){
@@ -37,6 +42,8 @@ fun order_parse(userOrder:String){
     }
     val total = special_deals(apples, oranges)
     println("Total: \$ ${total}")
+
+
 
 }
 
