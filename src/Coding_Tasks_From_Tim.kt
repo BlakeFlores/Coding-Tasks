@@ -14,7 +14,7 @@ fun main() {
 
     var arrival = Calendar.getInstance()
     arrival.add(Calendar.DAY_OF_YEAR, 7)
-    println("Your order has been placed! It will arrive in ${arrival.time}")
+    println("Your order has been placed! It will arrive on ${arrival.time}")
 }
 
 fun order_parse(userOrder:String){
@@ -24,15 +24,37 @@ fun order_parse(userOrder:String){
     var apples = 0
     var oranges = 0
 
+    val apple_stock = 5
+    val orange_stock = 3
+
+    var sold_apples = 0
+    var sold_oranges = 0
+
     if (orderItems != null){
         for(current_item in orderItems.indices)
         {
             when(orderItems[current_item]){
                 "apple"-> {
-                    apples++
+                    if(apples < apple_stock) {
+                        apples++
+                    }
+                    else{
+                        if(sold_apples ==0){
+                            println("Sorry, only $apple_stock apples are available")
+                            sold_apples++ //flag to ensure we only print this message once
+                        }
+                    }
                 }
                 "orange"->{
-                    oranges++
+                    if(oranges < orange_stock) {
+                        oranges++
+                    }
+                    else{
+                        if(sold_oranges ==0){
+                            println("Sorry, only $orange_stock oranges are available")
+                            sold_oranges++ //flag to ensure we only print this message once
+                        }
+                    }
                 }
                 else-> {
                     println("Item $current_item was unable to be read")
@@ -41,15 +63,15 @@ fun order_parse(userOrder:String){
         }
     }
     val total = special_deals(apples, oranges)
-    println("Total: \$ ${total}")
+    println("Total: \$ %.2f".format(total))
 
 
 
 }
 
 fun special_deals(apples:Int, oranges:Int):Double{
-    val special_apples = apples/2 * .6 //apples where the deal applies
-    val not_special_apples = apples%2 * .6 //apples which are full price
+    val special_apples = apples/2 * .60 //apples where the deal applies
+    val not_special_apples = apples%2 * .60 //apples which are full price
 
     val special_oranges = oranges/3 *.50 //oranges where the deal applies (co
     val not_special_oranges = oranges%3 *.25 //oranges which are full price
